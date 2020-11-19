@@ -1,0 +1,384 @@
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QFrame
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QSlider
+from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+import sys
+
+
+
+class PanelMenu(QFrame):
+    
+    labelTitulo = None
+    botonSimulacion = None
+    botonAnalisis = None   
+    actual = ""
+    principal = None
+    
+    
+    def __init__(self, pPrincipal):
+        
+        PanelMenu.principal = pPrincipal
+        super(PanelMenu, self).__init__()
+        super().setFrameShape(QFrame.StyledPanel)
+        super().setStyleSheet('border-radius: 10px; background-color: #444952')
+        super().setFixedHeight(100)
+        PanelMenu.actual = "Simulacion"
+        
+        
+        lay = QHBoxLayout()
+        
+      
+
+        
+        font = QFont()
+        font.setFamily('Times font')
+        font.setFixedPitch(False)
+        font.setPointSize(12)
+        font.setBold(True)
+        
+        fontTitle = QFont()
+        fontTitle.setFamily('Times font')
+        fontTitle.setFixedPitch(False)
+        fontTitle.setPointSize(15)
+        fontTitle.setBold(True)
+        
+        labelVacio = QLabel()
+        labelVacio.setFixedWidth(30)
+        lay.addWidget(labelVacio)
+        
+        PanelMenu.labelTitulo = QLabel()
+        PanelMenu.labelTitulo.setFont(fontTitle)
+        PanelMenu.labelTitulo.setText("SUPERVISOR")
+        PanelMenu.labelTitulo.setStyleSheet('color: white')
+        lay.addWidget(PanelMenu.labelTitulo)
+        
+        PanelMenu.botonSimulacion = QPushButton('SIMULACIÓN', self)
+        PanelMenu.botonSimulacion.setFont(font)
+        PanelMenu.botonSimulacion.setStyleSheet('background-color: #444952; color: white')
+        PanelMenu.botonSimulacion.setFixedSize(200,40)
+        PanelMenu.botonSimulacion.clicked.connect(self.accion1)
+        PanelMenu.botonSimulacion.setEnabled(False)
+        lay.addWidget(PanelMenu.botonSimulacion)
+        
+        PanelMenu.botonAnalisis = QPushButton('ANÁLISIS', self)
+        PanelMenu.botonAnalisis.setFont(font)
+        PanelMenu.botonAnalisis.setStyleSheet('background-color: #2e3138; color:gray')
+        PanelMenu.botonAnalisis.setFixedSize(200,40)
+        PanelMenu.botonAnalisis.clicked.connect(self.accion2)
+        lay.addWidget(PanelMenu.botonAnalisis)
+        
+        self.setLayout(lay)
+        
+    
+    def toggle(self):
+        if PanelMenu.actual == "Analisis":
+            PanelMenu.botonAnalisis.setEnabled(True)
+            PanelMenu.botonAnalisis.setStyleSheet('background-color: #2e3138; color: gray')
+            PanelMenu.botonSimulacion.setEnabled(False)
+            PanelMenu.botonSimulacion.setStyleSheet('background-color: #444952; color: white')
+          
+            PanelMenu.actual = "Simulacion"
+        else:
+            PanelMenu.botonAnalisis.setEnabled(False)
+            PanelMenu.botonAnalisis.setStyleSheet('background-color: #444952; color:white')
+            PanelMenu.botonSimulacion.setEnabled(True)
+            PanelMenu.botonSimulacion.setStyleSheet('background-color: #2e3138; color: gray')
+            PanelMenu.actual = "Analisis"
+            
+    def accion1(self):
+        self.toggle()
+        PanelMenu.principal.toggle()
+        PanelMenu.botonSimulacion.clicked.disconnect()
+        PanelMenu.botonAnalisis.clicked.connect(self.accion2)
+        
+    def accion2(self):
+        self.toggle()
+        PanelMenu.principal.toggle()
+        PanelMenu.botonSimulacion.clicked.connect(self.accion1)
+        PanelMenu.botonAnalisis.clicked.disconnect()
+        
+        
+        
+    
+        
+class PanelParametros(QFrame):
+    
+    slider = None
+    labelSlider = None
+    labelValorSlider = None
+    vboxLayout = None
+    labelVacio = None
+    panelSwitch = None
+    
+    swon1 = None
+    swoff2 = None
+    labelSwitch1 = None
+    
+    swon2 = None
+    swoff2 = None
+    labelSwitch2 = None
+
+    lay1 = None
+    actual1 = "ON"
+    actual2 = "ON"
+    
+    def __init__(self):
+        super(PanelParametros, self).__init__()
+        font = QFont()
+        font.setFamily('Times font')
+        font.setFixedPitch(False)
+        font.setPointSize(12)
+        font.setBold(True)
+
+        
+        PanelParametros.vboxLayout = QVBoxLayout()        
+        self.setLayout(self.vboxLayout)
+        
+        
+        PanelParametros.labelVacio = QLabel()
+        
+        self.labelValorSlider = QLabel('0', self)
+        self.labelValorSlider.setFont(font)
+        self.labelValorSlider.setFixedWidth(70)
+        self.labelValorSlider.setStyleSheet('color:white; background-color: #444952; border-radius: 10px')
+        self.labelValorSlider.setAlignment(Qt.AlignCenter);
+        self.vboxLayout.addWidget(self.labelValorSlider)
+
+        
+        PanelParametros.slider = QSlider(Qt.Horizontal, self)
+        PanelParametros.slider.setFixedWidth(470)
+        PanelParametros.slider.setFixedHeight(30)
+        PanelParametros.slider.setMinimum(0)
+        PanelParametros.slider.setMaximum(1000)
+        PanelParametros.slider.valueChanged[int].connect(self.changeValue)
+        PanelParametros.slider.setStyleSheet('QSlider::handle:horizontal {background-color: #8ab71b;}')
+        PanelParametros.vboxLayout.addWidget(PanelParametros.slider)
+        
+        PanelParametros.labelSlider = QLabel('RADIACIÓN')
+        PanelParametros.labelSlider.setStyleSheet('color: white')
+        PanelParametros.labelSlider.setFont(font)
+        PanelParametros.vboxLayout.addWidget(PanelParametros.labelSlider)
+        
+   
+
+        
+        self.panelSwitch = QFrame()
+        self.panelSwitch.setFixedHeight(500)
+        self.lay1 = QGridLayout()
+        self.panelSwitch.setLayout(self.lay1)
+        
+        self.labelSwitch1 = QLabel('SWITCH 1')
+        self.labelSwitch1.setFont(font)
+        self.labelSwitch1.setStyleSheet('color: white')
+        self.labelSwitch1.setAlignment(Qt.AlignCenter);
+        self.labelSwitch1.setFixedWidth(200)
+        self.lay1.addWidget(self.labelSwitch1,1,1)
+        
+        self.swon1 = QPushButton('ON', self)
+        self.swon1.setFont(font)
+        self.swon1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+        self.swon1.setFixedSize(100,40)
+        self.swon1.setEnabled(False)
+        self.swon1.setFont(font)
+        self.swon1.clicked.connect(self.toggle1)
+        self.lay1.addWidget(self.swon1,1,2)
+        
+        self.swoff1 = QPushButton('OFF', self)
+        self.swoff1.setFont(font)
+        self.swoff1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+        self.swoff1.setFixedSize(100,40)
+        self.swoff1.setFont(font)
+        self.swoff1.clicked.connect(self.toggle1)
+        self.lay1.addWidget(self.swoff1,1,3)
+        
+        self.labelSwitch2 = QLabel('SWITCH 2')
+        self.labelSwitch2.setFont(font)
+        self.labelSwitch2.setStyleSheet('color: white')
+        self.labelSwitch2.setAlignment(Qt.AlignCenter);
+        self.labelSwitch2.setFixedWidth(200)
+        self.lay1.addWidget(self.labelSwitch2,2,1)
+        
+        self.swon2 = QPushButton('ON', self)
+        self.swon2.setFont(font)
+        self.swon2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+        self.swon2.setFixedSize(100,40)
+        self.swon2.setEnabled(False)
+        self.swon2.setFont(font)
+        self.swon2.clicked.connect(self.toggle2)
+        self.lay1.addWidget(self.swon2,2,2)
+        
+        self.swoff2 = QPushButton('OFF', self)
+        self.swoff2.setFont(font)
+        self.swoff2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+        self.swoff2.setFixedSize(100,40)
+        self.swoff2.setFont(font)
+        self.swoff2.clicked.connect(self.toggle2)
+        self.lay1.addWidget(self.swoff2,2,3)
+        
+        
+        self.panelSwitch.setFixedHeight(100)
+        self.vboxLayout.addWidget(self.panelSwitch)
+        
+        self.labelVacio.setFixedHeight(600)
+        
+        self.vboxLayout.addWidget(self.labelVacio)
+
+        
+    def changeValue(self, value):
+        valor = str(value)
+        self.labelValorSlider.setText(valor)
+        
+    def toggle1(self):
+        if(self.actual1 == "ON"):
+            self.actual1 = "OFF"
+            self.swon1.setEnabled(True)
+            self.swon1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            self.swoff1.setEnabled(False)
+            self.swoff1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            print("cambio a off")
+        else:
+            self.actual1 = "ON"
+            self.swon1.setEnabled(False)
+            self.swon1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            self.swoff1.setEnabled(True)
+            self.swoff1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            print('cambio a on')
+            
+    def toggle2(self):
+        if(self.actual2 == "ON"):
+            self.actual2 = "OFF"
+            self.swon2.setEnabled(True)
+            self.swon2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            self.swoff2.setEnabled(False)
+            self.swoff2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            print("cambio a off")
+        else:
+            self.actual2 = "ON"
+            self.swon2.setEnabled(False)
+            self.swon2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            self.swoff2.setEnabled(True)
+            self.swoff2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            print('cambio a on')
+   
+            
+
+
+        
+            
+
+
+class PanelCuerpo(QFrame):
+    actual = ""
+    panelSimulacion = None
+    hboxPanelCuerpo = None
+    panelAnalisis = None
+    
+    def __init__(self):
+        super(PanelCuerpo, self).__init__() 
+        PanelCuerpo.actual = "Simulacion"
+        PanelCuerpo.panelSimulacion = PanelSimulacion()
+        PanelCuerpo.hboxPanelCuerpo = QHBoxLayout()
+        PanelCuerpo.hboxPanelCuerpo.addWidget(PanelCuerpo.panelSimulacion)
+        PanelCuerpo.panelAnalisis = PanelAnalisis()
+        super().setLayout(PanelCuerpo.hboxPanelCuerpo)
+        
+    def toggle(self):
+        if PanelCuerpo.actual == "Simulacion":
+            PanelCuerpo.actual = "Analisis"
+            PanelCuerpo.panelSimulacion.setParent(None)
+            PanelCuerpo.hboxPanelCuerpo.addWidget(PanelCuerpo.panelAnalisis)
+        else:
+            PanelCuerpo.actual = "Simulacion"
+            PanelCuerpo.panelAnalisis.setParent(None)
+            PanelCuerpo.hboxPanelCuerpo.addWidget(PanelCuerpo.panelSimulacion)
+
+          
+        
+class PanelPlot(QFrame):
+    def __init__(self):
+        super(PanelPlot, self).__init__()
+        super().setFrameShape(QFrame.StyledPanel)
+        super().setStyleSheet('border-radius:10px; background-color: #444952')
+        super().setFixedWidth(1200)
+        
+class PanelAnalisis(QFrame):
+    def __init__(self):
+        super(PanelAnalisis, self).__init__()
+
+        
+class PanelSimulacion(QFrame):
+
+    panelParametros = None
+    panelPlot = None
+    def __init__(self):
+        super(PanelSimulacion, self).__init__()
+        PanelSimulacion.panelParametros = PanelParametros()
+        PanelSimulacion.panelPlot = PanelPlot()
+        hboxSimulacion = QHBoxLayout()
+        hboxSimulacion.addWidget(PanelSimulacion.panelParametros)
+        hboxSimulacion.addWidget(PanelSimulacion.panelPlot)
+        super().setLayout(hboxSimulacion)
+        
+        
+        
+class Interfaz(QWidget):
+
+    #Crea aplicacion
+    app = QApplication(sys.argv)
+    panelMenu = None
+    panelAnalisis = None
+    panelPlot = None
+    panelCuerpo = None
+    
+    #Constructor
+    def __init__(self):       
+        super(Interfaz, self).__init__()
+        super().setWindowTitle('Supervisor')
+        super().setGeometry(60, 15, 1800 , 900)
+        super().move(60,15)
+        super().setFixedSize(super().size())
+        super().setStyleSheet('background-color: #2e3138')
+        vboxPrincipal = QVBoxLayout()
+        
+        #Crea Panel de Menu
+        Interfaz.panelMenu = PanelMenu(self)
+        vboxPrincipal.addWidget(Interfaz.panelMenu)
+        
+        #Crea Panel de Cuerpo
+        Interfaz.panelCuerpo = PanelCuerpo()
+        vboxPrincipal.addWidget(Interfaz.panelCuerpo)
+        
+        
+        #Crea panel de parametros
+        Interfaz.panelParametros = PanelParametros()
+       
+        
+        
+        #Crea panel de plot
+        Interfaz.panelPlot = PanelPlot()
+       
+        
+        #Crea panel de analisis
+        Interfaz.panelAnalisis = PanelAnalisis()
+        super().setLayout(vboxPrincipal)     
+        super().show()
+        sys.exit(Interfaz.app.exec())
+   
+    
+    #Cambia entre pestañas
+    def toggle(self):
+        Interfaz.panelCuerpo.toggle()
+    
+    
+    #Correr
+    
+Interfaz()
+
+    
