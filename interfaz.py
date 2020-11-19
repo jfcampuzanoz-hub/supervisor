@@ -135,6 +135,8 @@ class PanelParametros(QFrame):
     actual2 = "ON"
     actual3 = "ON"
     
+    botonSimular = None
+    
     def __init__(self):
         super(PanelParametros, self).__init__()
         font = QFont()
@@ -153,6 +155,7 @@ class PanelParametros(QFrame):
         self.labelValorSlider = QLabel('0', self)
         self.labelValorSlider.setFont(font)
         self.labelValorSlider.setFixedWidth(70)
+        self.labelValorSlider.setFixedHeight(30)
         self.labelValorSlider.setStyleSheet('color:white; background-color: #444952; border-radius: 10px')
         self.labelValorSlider.setAlignment(Qt.AlignCenter);
         self.vboxLayout.addWidget(self.labelValorSlider)
@@ -172,7 +175,9 @@ class PanelParametros(QFrame):
         PanelParametros.labelSlider.setFont(font)
         PanelParametros.vboxLayout.addWidget(PanelParametros.labelSlider)
         
-   
+        lbl = QLabel()
+        lbl.setFixedHeight(100)
+        self.vboxLayout.addWidget(lbl)
 
         
         self.panelSwitch = QFrame()
@@ -192,7 +197,6 @@ class PanelParametros(QFrame):
         self.swon1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
         self.swon1.setFixedSize(100,40)
         self.swon1.setEnabled(False)
-        self.swon1.setFont(font)
         self.swon1.clicked.connect(self.toggle1)
         self.lay1.addWidget(self.swon1,1,2)
         
@@ -200,7 +204,6 @@ class PanelParametros(QFrame):
         self.swoff1.setFont(font)
         self.swoff1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
         self.swoff1.setFixedSize(100,40)
-        self.swoff1.setFont(font)
         self.swoff1.clicked.connect(self.toggle1)
         self.lay1.addWidget(self.swoff1,1,3)
         
@@ -216,7 +219,6 @@ class PanelParametros(QFrame):
         self.swon2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
         self.swon2.setFixedSize(100,40)
         self.swon2.setEnabled(False)
-        self.swon2.setFont(font)
         self.swon2.clicked.connect(self.toggle2)
         self.lay1.addWidget(self.swon2,2,2)
         
@@ -224,7 +226,6 @@ class PanelParametros(QFrame):
         self.swoff2.setFont(font)
         self.swoff2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
         self.swoff2.setFixedSize(100,40)
-        self.swoff2.setFont(font)
         self.swoff2.clicked.connect(self.toggle2)
         self.lay1.addWidget(self.swoff2,2,3)
         
@@ -240,7 +241,6 @@ class PanelParametros(QFrame):
         self.swon3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
         self.swon3.setFixedSize(100,40)
         self.swon3.setEnabled(False)
-        self.swon3.setFont(font)
         self.swon3.clicked.connect(lambda: self.toggle3("ON"))
         self.lay1.addWidget(self.swon3,3,2)
         
@@ -248,7 +248,6 @@ class PanelParametros(QFrame):
         self.swSinc3.setFont(font)
         self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
         self.swSinc3.setFixedSize(100,40)
-        self.swSinc3.setFont(font)
         self.swSinc3.clicked.connect(lambda: self.toggle3("SINC"))
         self.lay1.addWidget(self.swSinc3,3,3)
         
@@ -256,21 +255,27 @@ class PanelParametros(QFrame):
         self.swoff3.setFont(font)
         self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
         self.swoff3.setFixedSize(100,40)
-        self.swoff3.setFont(font)
         self.swoff3.clicked.connect(lambda: self.toggle3("OFF"))
         self.lay1.addWidget(self.swoff3,3,4)
         
 
-
+        self.botonSimular = QPushButton('SIMULAR', self)
+        self.botonSimular.setFont(font)
+        self.botonSimular.setStyleSheet('background-color: #2aa1d3; color: white; border-radius: 10px')
+        self.botonSimular.setGeometry(0,0,150, 60)
+        self.botonSimular.setFixedHeight(50)
+        self.botonSimular.clicked.connect(self.simular)
+        
         
         
         
         self.panelSwitch.setFixedHeight(300)
         self.vboxLayout.addWidget(self.panelSwitch)
         
-        self.labelVacio.setFixedHeight(600)
+        self.labelVacio.setFixedHeight(100)
         
         self.vboxLayout.addWidget(self.labelVacio)
+        self.vboxLayout.addWidget(self.botonSimular)
 
         
     def changeValue(self, value):
@@ -328,6 +333,8 @@ class PanelParametros(QFrame):
             self.swon3.setEnabled(True)
             self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
             
+    def simular(self):
+        print("Se simula")
    
             
 
