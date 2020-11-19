@@ -9,6 +9,12 @@ from PyQt5.QtWidgets import QSlider
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
+
+import matplotlib
+matplotlib.use('Qt5Agg')
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
 import sys
 
 
@@ -110,6 +116,8 @@ class PanelMenu(QFrame):
         
 class PanelParametros(QFrame):
     
+    padre = None
+    
     slider = None
     labelSlider = None
     labelValorSlider = None
@@ -137,7 +145,9 @@ class PanelParametros(QFrame):
     
     botonSimular = None
     
-    def __init__(self):
+    def __init__(self, pPadre):
+        
+        self.padre = pPadre
         super(PanelParametros, self).__init__()
         font = QFont()
         font.setFamily('Times font')
@@ -334,7 +344,7 @@ class PanelParametros(QFrame):
             self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
             
     def simular(self):
-        print("Se simula")
+        self.padre.plot()
    
             
 
@@ -367,15 +377,34 @@ class PanelCuerpo(QFrame):
             PanelCuerpo.actual = "Simulacion"
             PanelCuerpo.panelAnalisis.setParent(None)
             PanelCuerpo.hboxPanelCuerpo.addWidget(PanelCuerpo.panelSimulacion)
-
+        
+    def plot(self):
+        self.panelSimulacion.plot()
           
         
 class PanelPlot(QFrame):
+    
+
     def __init__(self):
         super(PanelPlot, self).__init__()
         super().setFrameShape(QFrame.StyledPanel)
         super().setStyleSheet('border-radius:10px; background-color: #444952')
         super().setFixedWidth(1200)
+        self.lay = QVBoxLayout()
+        self.setLayout(self.lay)
+        
+    def plot(self):
+        self.sc = MplCanvas(self, width=5, height=4, dpi=100)
+        self.sc.axes.plot([0,1,2,3,4], [10,1,20,3,40])
+        self.lay.addWidget(self.sc)
+
+class MplCanvas(FigureCanvasQTAgg):
+    
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super(MplCanvas, self).__init__(fig)
+        
         
 class PanelAnalisis(QFrame):
     def __init__(self):
@@ -388,12 +417,16 @@ class PanelSimulacion(QFrame):
     panelPlot = None
     def __init__(self):
         super(PanelSimulacion, self).__init__()
-        PanelSimulacion.panelParametros = PanelParametros()
+        PanelSimulacion.panelParametros = PanelParametros(self)
         PanelSimulacion.panelPlot = PanelPlot()
         hboxSimulacion = QHBoxLayout()
         hboxSimulacion.addWidget(PanelSimulacion.panelParametros)
         hboxSimulacion.addWidget(PanelSimulacion.panelPlot)
         super().setLayout(hboxSimulacion)
+        
+        
+    def plot(self):
+        self.panelPlot.plot()
         
         
         
@@ -425,8 +458,6 @@ class Interfaz(QWidget):
         vboxPrincipal.addWidget(Interfaz.panelCuerpo)
         
         
-        #Crea panel de parametros
-        Interfaz.panelParametros = PanelParametros()
        
         
         
@@ -439,6 +470,7 @@ class Interfaz(QWidget):
         super().setLayout(vboxPrincipal)     
         super().show()
         sys.exit(Interfaz.app.exec())
+        
    
     
     #Cambia entre pestañas
