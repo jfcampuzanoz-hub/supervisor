@@ -124,10 +124,16 @@ class PanelParametros(QFrame):
     swon2 = None
     swoff2 = None
     labelSwitch2 = None
+    
+    swon3 = None
+    swoff3 = None
+    swSinc3 = None
+    labelSwitch3 = None
 
     lay1 = None
     actual1 = "ON"
     actual2 = "ON"
+    actual3 = "ON"
     
     def __init__(self):
         super(PanelParametros, self).__init__()
@@ -222,8 +228,44 @@ class PanelParametros(QFrame):
         self.swoff2.clicked.connect(self.toggle2)
         self.lay1.addWidget(self.swoff2,2,3)
         
+        self.labelSwitch3 = QLabel('SWITCH 3')
+        self.labelSwitch3.setFont(font)
+        self.labelSwitch3.setStyleSheet('color: white')
+        self.labelSwitch3.setAlignment(Qt.AlignCenter);
+        self.labelSwitch3.setFixedWidth(200)
+        self.lay1.addWidget(self.labelSwitch3,3,1)
         
-        self.panelSwitch.setFixedHeight(100)
+        self.swon3 = QPushButton('ON', self)
+        self.swon3.setFont(font)
+        self.swon3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+        self.swon3.setFixedSize(100,40)
+        self.swon3.setEnabled(False)
+        self.swon3.setFont(font)
+        self.swon3.clicked.connect(lambda: self.toggle3("ON"))
+        self.lay1.addWidget(self.swon3,3,2)
+        
+        self.swSinc3 = QPushButton('CARGAR', self)
+        self.swSinc3.setFont(font)
+        self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+        self.swSinc3.setFixedSize(100,40)
+        self.swSinc3.setFont(font)
+        self.swSinc3.clicked.connect(lambda: self.toggle3("SINC"))
+        self.lay1.addWidget(self.swSinc3,3,3)
+        
+        self.swoff3 = QPushButton('OFF', self)
+        self.swoff3.setFont(font)
+        self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+        self.swoff3.setFixedSize(100,40)
+        self.swoff3.setFont(font)
+        self.swoff3.clicked.connect(lambda: self.toggle3("OFF"))
+        self.lay1.addWidget(self.swoff3,3,4)
+        
+
+
+        
+        
+        
+        self.panelSwitch.setFixedHeight(300)
         self.vboxLayout.addWidget(self.panelSwitch)
         
         self.labelVacio.setFixedHeight(600)
@@ -242,14 +284,12 @@ class PanelParametros(QFrame):
             self.swon1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
             self.swoff1.setEnabled(False)
             self.swoff1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            print("cambio a off")
         else:
             self.actual1 = "ON"
             self.swon1.setEnabled(False)
             self.swon1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
             self.swoff1.setEnabled(True)
             self.swoff1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            print('cambio a on')
             
     def toggle2(self):
         if(self.actual2 == "ON"):
@@ -258,14 +298,36 @@ class PanelParametros(QFrame):
             self.swon2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
             self.swoff2.setEnabled(False)
             self.swoff2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            print("cambio a off")
         else:
             self.actual2 = "ON"
             self.swon2.setEnabled(False)
             self.swon2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
             self.swoff2.setEnabled(True)
             self.swoff2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            print('cambio a on')
+            
+    def toggle3(self,txt):
+        if(txt == "ON"):
+            self.swon3.setEnabled(False)
+            self.swon3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            self.swoff3.setEnabled(True)
+            self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            self.swSinc3.setEnabled(True)
+            self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+        elif (txt == "OFF"):
+            self.swoff3.setEnabled(False)
+            self.swoff3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            self.swon3.setEnabled(True)
+            self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            self.swSinc3.setEnabled(True)
+            self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+        else:
+            self.swSinc3.setEnabled(False)
+            self.swSinc3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
+            self.swoff3.setEnabled(True)
+            self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            self.swon3.setEnabled(True)
+            self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
+            
    
             
 
