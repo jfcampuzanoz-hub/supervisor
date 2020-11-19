@@ -395,7 +395,7 @@ class PanelPlot(QFrame):
         
     def plot(self):
         self.sc = MplCanvas(self, width=5, height=4, dpi=100)
-        self.sc.axes.plot([0,1,2,3,4], [10,1,20,3,40])
+        self.sc.axes.plot([0,1,2,3,4], [10,1,20,3,40], color = '#6a8922', linewidth = 5)        
         self.lay.addWidget(self.sc)
 
 class MplCanvas(FigureCanvasQTAgg):
@@ -403,6 +403,8 @@ class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
+        self.axes.set_facecolor('#23252a')
+        fig.patch.set_facecolor('#444952')
         super(MplCanvas, self).__init__(fig)
         
         
