@@ -173,7 +173,7 @@ class PanelParametros(QFrame):
 
         
         PanelParametros.slider = QSlider(Qt.Horizontal, self)
-        PanelParametros.slider.setFixedWidth(470)
+        PanelParametros.slider.setFixedWidth(520)
         PanelParametros.slider.setFixedHeight(30)
         PanelParametros.slider.setMinimum(0)
         PanelParametros.slider.setMaximum(1000)
@@ -415,14 +415,18 @@ class PanelPlot(QFrame):
     def __init__(self, pPadre):
         super(PanelPlot, self).__init__()
         super().setFrameShape(QFrame.StyledPanel)
-        super().setStyleSheet('; background-color: #444952')
-        super().setFixedWidth(1200)
+        super().setStyleSheet('background-color: #444952; border-radius: 10px')
+        super().setFixedWidth(1150)
         self.lay = QVBoxLayout()
         self.lay2 = QVBoxLayout()
         self.lay3 = QHBoxLayout()
         
         self.panelGrafica = QFrame( )
         self.panelBotones = QFrame( )
+        
+        self.panelGrafica.setStyleSheet('border-radius: 10px')
+        self.panelBotones.setStyleSheet('border-radius: 10px')
+        
         
         self.setLayout(self.lay)
         self.panelGrafica.setLayout(self.lay2)
