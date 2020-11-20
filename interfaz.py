@@ -415,19 +415,61 @@ class PanelPlot(QFrame):
     def __init__(self, pPadre):
         super(PanelPlot, self).__init__()
         super().setFrameShape(QFrame.StyledPanel)
-        super().setStyleSheet('border-radius:10px; background-color: #444952')
+        super().setStyleSheet('; background-color: #444952')
         super().setFixedWidth(1200)
         self.lay = QVBoxLayout()
         self.lay2 = QVBoxLayout()
+        self.lay3 = QHBoxLayout()
+        
         self.panelGrafica = QFrame( )
+        self.panelBotones = QFrame( )
+        
         self.setLayout(self.lay)
         self.panelGrafica.setLayout(self.lay2)
         self.padre = pPadre
         self.combo = QComboBox( self )
-        self.combo.addItem("Voltaje en la carga")
-        self.combo.addItem("SOC de la batería")
+        self.combo.addItem("VOLTAJE CARGA")
+        self.combo.addItem("SOC BATERÍA")
         self.lay.addWidget(self.panelGrafica)
-        self.lay.addWidget(self.combo)
+        
+        self.panelBotones.setLayout(self.lay3)
+        self.lay3.addWidget(self.combo)
+        
+        self.panelBotones.setFixedHeight(100)
+
+        
+        
+        self.font = QFont()
+        self.font.setFamily('Times font')
+        self.font.setFixedPitch(False)
+        self.font.setPointSize(10)
+        self.font.setBold(True)
+        
+        
+        self.combo.setStyleSheet('QComboBox'
+                                       '{'
+                                            'color:white;'
+                                            'background-color: #23252a;'
+                                            'border-radius: 10px'
+                                        '}'
+                                        
+                                       'QComboBox::drop-down'
+                                        '{'
+                                            'width: 20px;'
+                                            'border-color: black;'
+                                            'color: white'
+                                        '}'
+                                        )  
+        
+        self.combo.setFont(self.font)
+
+
+        self.combo.setFixedSize(200,50)         
+        
+        
+
+
+        self.lay.addWidget(self.panelBotones)
         self.panelGrafica.show()
         self.combo.currentIndexChanged.connect(self.on_currentIndexChanged)
         self.y2 = None
@@ -446,13 +488,14 @@ class PanelPlot(QFrame):
         self.y1 = self.data[:,1]
         self.y2 = self.data[:,2]
         
-        if(self.combo.currentText() == "Voltaje en la carga"):
+        if(self.combo.currentText() == "VOLTAJE CARGA"):
             y = self.y1
-        elif(self.combo.currentText() == "SOC de la batería"):
+        elif(self.combo.currentText() == "SOC BATERÍA"):
             y = self.y2
         self.sc.axes.plot(self.tiempo, y, color = '#6a8922', linewidth = 1) 
         self.lay2.addWidget(self.sc)
         self.activar = True
+
         
     def actualizar(self):
         if self.activar == True:
@@ -461,9 +504,9 @@ class PanelPlot(QFrame):
             self.y1 = self.data[:,1]
             self.y2 = self.data[:,2]
             
-            if(self.combo.currentText() == "Voltaje en la carga"):
+            if(self.combo.currentText() == "VOLTAJE CARGA"):
                 y = self.y1
-            elif(self.combo.currentText() == "SOC de la batería"):
+            elif(self.combo.currentText() == "SOC BATERÍA"):
                 y = self.y2
                 
             self.sc.axes.clear()
