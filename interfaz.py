@@ -9,6 +9,8 @@ from PyQt5.QtWidgets import QSlider
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
+import numpy as np
+import mundo
 
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -344,25 +346,44 @@ class PanelParametros(QFrame):
             self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
             
     def simular(self):
+        irr = self.slider.value()
+        if self.swSinc3.isEnabled:
+            sinc = 1
+        else:
+            sinc = 1
+            
+        if self.swon3.isEnabled:
+            on3 = 0
+        else:
+            on3 = 1
+            
+        if self.swon2.isEnabled:
+            on2 = 1
+        else:
+            on2 = 1
+            
+        if self.swon1.isEnabled:
+            on1 = 1
+        else:
+            on1 = 1
+            
+       
+        self.padre.simular(irr, sinc, on3, on2, on1)
         self.padre.plot()
    
-            
-
-
-        
-            
-
 
 class PanelCuerpo(QFrame):
     actual = ""
     panelSimulacion = None
     hboxPanelCuerpo = None
     panelAnalisis = None
+    padre = None
     
-    def __init__(self):
+    def __init__(self,pPadre):
         super(PanelCuerpo, self).__init__() 
+        self.padre = pPadre
         PanelCuerpo.actual = "Simulacion"
-        PanelCuerpo.panelSimulacion = PanelSimulacion()
+        PanelCuerpo.panelSimulacion = PanelSimulacion(self)
         PanelCuerpo.hboxPanelCuerpo = QHBoxLayout()
         PanelCuerpo.hboxPanelCuerpo.addWidget(PanelCuerpo.panelSimulacion)
         PanelCuerpo.panelAnalisis = PanelAnalisis()
@@ -378,34 +399,53 @@ class PanelCuerpo(QFrame):
             PanelCuerpo.panelAnalisis.setParent(None)
             PanelCuerpo.hboxPanelCuerpo.addWidget(PanelCuerpo.panelSimulacion)
         
-    def plot(self):
+    def plot(self):       
         self.panelSimulacion.plot()
-          
+    
+    def simular(self,irr, sinc, on3, on2, on1):
+        self.padre.simular(irr, sinc, on3, on2, on1)  
+
+    def getData(self):
+        return self.padre.getData()        
         
 class PanelPlot(QFrame):
-    
+    flag = 0
+    padre = None
 
-    def __init__(self):
+    def __init__(self, pPadre):
         super(PanelPlot, self).__init__()
         super().setFrameShape(QFrame.StyledPanel)
         super().setStyleSheet('border-radius:10px; background-color: #444952')
         super().setFixedWidth(1200)
         self.lay = QVBoxLayout()
         self.setLayout(self.lay)
+        self.padre = pPadre
         
     def plot(self):
+        if self.flag == 1:
+            self.sc.fig.clf()
+            
         self.sc = MplCanvas(self, width=5, height=4, dpi=100)
-        self.sc.axes.plot([0,1,2,3,4], [10,1,20,3,40], color = '#6a8922', linewidth = 5)        
+        
+        data = self.padre.getData()
+        
+        tiempo = data[:,0]
+        y = data[:,3]
+
+        
+        self.sc.axes.plot(tiempo, y, color = '#6a8922', linewidth = 1) 
+        self.flag = 1
         self.lay.addWidget(self.sc)
 
 class MplCanvas(FigureCanvasQTAgg):
-    
+    fig = None
     def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
+            
+        self.fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = self.fig.add_subplot(1,1,1)
         self.axes.set_facecolor('#23252a')
-        fig.patch.set_facecolor('#444952')
-        super(MplCanvas, self).__init__(fig)
+        self.fig.patch.set_facecolor('#444952')
+        super(MplCanvas, self).__init__(self.fig)
         
         
 class PanelAnalisis(QFrame):
@@ -417,10 +457,13 @@ class PanelSimulacion(QFrame):
 
     panelParametros = None
     panelPlot = None
-    def __init__(self):
+    padre = None
+    
+    def __init__(self, pPadre):
         super(PanelSimulacion, self).__init__()
+        self.padre = pPadre
         PanelSimulacion.panelParametros = PanelParametros(self)
-        PanelSimulacion.panelPlot = PanelPlot()
+        PanelSimulacion.panelPlot = PanelPlot(self)
         hboxSimulacion = QHBoxLayout()
         hboxSimulacion.addWidget(PanelSimulacion.panelParametros)
         hboxSimulacion.addWidget(PanelSimulacion.panelPlot)
@@ -429,6 +472,12 @@ class PanelSimulacion(QFrame):
         
     def plot(self):
         self.panelPlot.plot()
+        
+    def simular(self, irr, sinc, on3, on2, on1):
+        self.padre.simular(irr, sinc, on3, on2, on1)
+        
+    def getData(self):
+        return self.padre.getData()
         
         
         
@@ -441,6 +490,8 @@ class Interfaz(QWidget):
     panelPlot = None
     panelCuerpo = None
     
+    supervisor = None
+    
     #Constructor
     def __init__(self):       
         super(Interfaz, self).__init__()
@@ -451,27 +502,28 @@ class Interfaz(QWidget):
         super().setStyleSheet('background-color: #2e3138')
         vboxPrincipal = QVBoxLayout()
         
+        #Crea un supervisor
+        self.supervisor = mundo.Supervisor()
+        
         #Crea Panel de Menu
         Interfaz.panelMenu = PanelMenu(self)
         vboxPrincipal.addWidget(Interfaz.panelMenu)
         
         #Crea Panel de Cuerpo
-        Interfaz.panelCuerpo = PanelCuerpo()
+        Interfaz.panelCuerpo = PanelCuerpo(self)
         vboxPrincipal.addWidget(Interfaz.panelCuerpo)
         
-        
-       
-        
-        
-        #Crea panel de plot
-        Interfaz.panelPlot = PanelPlot()
-       
-        
-        #Crea panel de analisis
-        Interfaz.panelAnalisis = PanelAnalisis()
+
         super().setLayout(vboxPrincipal)     
         super().show()
         sys.exit(Interfaz.app.exec())
+        
+    def getData(self):
+        self.scopes = self.supervisor.getData()
+        return self.scopes
+    
+    def simular(self, irr, sinc, on3, on2, on1):
+        self.supervisor.simular(irr, sinc, on3, on2, on1)
         
    
     
