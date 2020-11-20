@@ -7,16 +7,15 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QSlider
 from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 import numpy as np
 import mundo
-
 import matplotlib
 matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-
 import sys
 
 
@@ -411,6 +410,7 @@ class PanelCuerpo(QFrame):
 class PanelPlot(QFrame):
     flag = 0
     padre = None
+    
 
     def __init__(self, pPadre):
         super(PanelPlot, self).__init__()
@@ -418,35 +418,67 @@ class PanelPlot(QFrame):
         super().setStyleSheet('border-radius:10px; background-color: #444952')
         super().setFixedWidth(1200)
         self.lay = QVBoxLayout()
+        self.lay2 = QVBoxLayout()
+        self.panelGrafica = QFrame( )
         self.setLayout(self.lay)
+        self.panelGrafica.setLayout(self.lay2)
         self.padre = pPadre
+        self.combo = QComboBox( self )
+        self.combo.addItem("Voltaje en la carga")
+        self.combo.addItem("SOC de la batería")
+        self.lay.addWidget(self.panelGrafica)
+        self.lay.addWidget(self.combo)
+        self.panelGrafica.show()
+        self.combo.currentIndexChanged.connect(self.on_currentIndexChanged)
+        self.y2 = None
+        self.y1 = None
+        self.activar = False
+    def on_currentIndexChanged( self ):
+        self.actualizar()
+
+        
         
     def plot(self):
-        if self.flag == 1:
-            self.sc.fig.clf()
             
-        self.sc = MplCanvas(self, width=5, height=4, dpi=100)
+        self.sc = MplCanvas(self, 5, 4, 100)                   
+        self.data = self.padre.getData()
+        self.tiempo = self.data[:,0]  
+        self.y1 = self.data[:,1]
+        self.y2 = self.data[:,2]
         
-        data = self.padre.getData()
+        if(self.combo.currentText() == "Voltaje en la carga"):
+            y = self.y1
+        elif(self.combo.currentText() == "SOC de la batería"):
+            y = self.y2
+        self.sc.axes.plot(self.tiempo, y, color = '#6a8922', linewidth = 1) 
+        self.lay2.addWidget(self.sc)
+        self.activar = True
         
-        tiempo = data[:,0]
-        y = data[:,3]
-
-        
-        self.sc.axes.plot(tiempo, y, color = '#6a8922', linewidth = 1) 
-        self.flag = 1
-        self.lay.addWidget(self.sc)
+    def actualizar(self):
+        if self.activar == True:
+            self.data = self.padre.getData()
+            self.tiempo = self.data[:,0]  
+            self.y1 = self.data[:,1]
+            self.y2 = self.data[:,2]
+            
+            if(self.combo.currentText() == "Voltaje en la carga"):
+                y = self.y1
+            elif(self.combo.currentText() == "SOC de la batería"):
+                y = self.y2
+                
+            self.sc.axes.clear()
+            self.sc.axes.plot(self.tiempo, y, color = '#6a8922', linewidth = 1)  
+            self.sc.draw()
 
 class MplCanvas(FigureCanvasQTAgg):
-    fig = None
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
-            
+    def __init__(self, parent, width, height, dpi ):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = self.fig.add_subplot(1,1,1)
+        self.axes = self.fig.add_subplot(111)
+        
         self.axes.set_facecolor('#23252a')
         self.fig.patch.set_facecolor('#444952')
-        super(MplCanvas, self).__init__(self.fig)
-        
+        super(MplCanvas, self).__init__(self.fig)  
+ 
         
 class PanelAnalisis(QFrame):
     def __init__(self):
@@ -532,7 +564,7 @@ class Interfaz(QWidget):
         Interfaz.panelCuerpo.toggle()
     
     
-    #Correr
+#Correr
     
 Interfaz()
 
