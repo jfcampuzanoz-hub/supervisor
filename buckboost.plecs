@@ -1962,9 +1962,9 @@ Plecs {
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
-"QAAAH0AAAAIAAAAfQAAAAcAAAB9AAAABgAAAH0AAAAFAAAAfQAAAAQAAAB9AAAAAwAAAH0AAAACAA"
-"AAfQAAAAEAAAB9AAAAegAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAABJAAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAB"
+"AAAAH0AAAAFAAAAfQAAAAgAAAB9AAAACQAAAH0AAAACAAAAfQAAAAMAAAB9AAAAAQAAAH0AAAAGAA"
+"AAfQAAAAcAAAB9AAAAegAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAABJAAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAxAAAAAQAAAAAAAAPoAAAAADE="
@@ -3031,7 +3031,7 @@ Plecs {
       Type          Scope
       Name          "Scope2"
       Show          on
-      Position      [1075, 80]
+      Position      [1080, 60]
       Direction     up
       Flipped       off
       Location      [0, 26; 1536, 807]
@@ -3042,9 +3042,9 @@ Plecs {
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
-"AAAAH0AAAAJAAAAfQAAAAQAAAB9AAAABQAAAH0AAAAGAAAAfQAAAAcAAAB9AAAAAQAAAH0AAAACAA"
-"AAfQAAAAMAAAB9AAABAQAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAADQAAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAB"
+"AAAAH0AAAAFAAAAfQAAAAgAAAB9AAAACQAAAH0AAAACAAAAfQAAAAMAAAB9AAAAAQAAAH0AAAAGAA"
+"AAfQAAAAcAAAB9AAABAQAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAADQAAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAxAAAAAQAAAAAAAAPoAAAAADE="
@@ -3307,9 +3307,9 @@ Plecs {
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
-"QAAAH0AAAAIAAAAfQAAAAcAAAB9AAAABgAAAH0AAAAFAAAAfQAAAAQAAAB9AAAAAwAAAH0AAAACAA"
-"AAfQAAAAEAAAB9AAABHAAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAADrAAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAB"
+"AAAAH0AAAAFAAAAfQAAAAgAAAB9AAAACQAAAH0AAAACAAAAfQAAAAMAAAB9AAAAAQAAAH0AAAAGAA"
+"AAfQAAAAcAAAB9AAABHAAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAADrAAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAxAAAAAQAAAAAAAAPoAAAAADE="
@@ -3542,9 +3542,9 @@ Plecs {
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
-"AAAAH0AAAAJAAAAfQAAAAQAAAB9AAAABQAAAH0AAAAGAAAAfQAAAAcAAAB9AAAAAQAAAH0AAAACAA"
-"AAfQAAAAMAAAB9AAABAQAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAADQAAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAB"
+"AAAAH0AAAAFAAAAfQAAAAgAAAB9AAAACQAAAH0AAAACAAAAfQAAAAMAAAB9AAAAAQAAAH0AAAAGAA"
+"AAfQAAAAcAAAB9AAABAQAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAADQAAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAxAAAAAQAAAAAAAAPoAAAAADE="
@@ -3693,12 +3693,12 @@ Plecs {
       Type          SignalMux
       Name          "Mux1"
       Show          off
-      Position      [1170, 330]
+      Position      [1270, 390]
       Direction     right
       Flipped       off
       Parameter {
         Variable      "Width"
-        Value         "3"
+        Value         "2"
         Show          off
       }
     }
@@ -4298,13 +4298,6 @@ Plecs {
     }
     Connection {
       Type          Signal
-      SrcComponent  "From4"
-      SrcTerminal   1
-      DstComponent  "Scope1"
-      DstTerminal   2
-    }
-    Connection {
-      Type          Signal
       SrcComponent  "From3"
       SrcTerminal   1
       DstComponent  "Scope1"
@@ -4471,21 +4464,6 @@ Plecs {
     Connection {
       Type          Wire
       SrcComponent  "S2"
-      SrcTerminal   2
-      Points        [935, 370]
-      Branch {
-        DstComponent  "S3"
-        DstTerminal   1
-      }
-      Branch {
-        Points        [935, 285; 1215, 285]
-        DstComponent  "S1"
-        DstTerminal   2
-      }
-    }
-    Connection {
-      Type          Wire
-      SrcComponent  "S2"
       SrcTerminal   1
       Points        [730, 370]
       Branch {
@@ -4502,21 +4480,6 @@ Plecs {
           DstComponent  "R4"
           DstTerminal   1
         }
-      }
-    }
-    Connection {
-      Type          Wire
-      SrcComponent  "R2"
-      SrcTerminal   1
-      Points        [1065, 370]
-      Branch {
-        DstComponent  "S3"
-        DstTerminal   2
-      }
-      Branch {
-        Points        [1135, 370]
-        DstComponent  "Vm2"
-        DstTerminal   1
       }
     }
     Connection {
@@ -4582,57 +4545,9 @@ Plecs {
       Type          Signal
       SrcComponent  "Mux1"
       SrcTerminal   1
-      Points        [1180, 320]
+      Points        [1320, 390; 1320, 320]
       DstComponent  "To File"
       DstTerminal   1
-    }
-    Connection {
-      Type          Signal
-      SrcComponent  "Vm2"
-      SrcTerminal   3
-      Points        [1150, 425]
-      Branch {
-        Points        [1170, 425; 1170, 420]
-        DstComponent  "Scope3"
-        DstTerminal   1
-      }
-      Branch {
-        Points        [1150, 340]
-        DstComponent  "Mux1"
-        DstTerminal   4
-      }
-    }
-    Connection {
-      Type          Signal
-      SrcComponent  "Vm1"
-      SrcTerminal   3
-      Points        [1020, 135]
-      Branch {
-        Points        [1045, 135]
-        DstComponent  "Scope2"
-        DstTerminal   1
-      }
-      Branch {
-        Points        [1020, 330]
-        DstComponent  "Mux1"
-        DstTerminal   3
-      }
-    }
-    Connection {
-      Type          Signal
-      SrcComponent  "Am1"
-      SrcTerminal   3
-      Points        [935, 55; 1035, 55]
-      Branch {
-        Points        [1040, 55; 1040, 85]
-        DstComponent  "Scope2"
-        DstTerminal   2
-      }
-      Branch {
-        Points        [1035, 320]
-        DstComponent  "Mux1"
-        DstTerminal   2
-      }
     }
     Connection {
       Type          Signal
@@ -4641,6 +4556,82 @@ Plecs {
       Points        [1195, 35]
       DstComponent  "S1"
       DstTerminal   3
+    }
+    Connection {
+      Type          Wire
+      SrcComponent  "R2"
+      SrcTerminal   1
+      Points        [1065, 370]
+      Branch {
+        DstComponent  "S3"
+        DstTerminal   2
+      }
+      Branch {
+        Points        [1135, 370]
+        DstComponent  "Vm2"
+        DstTerminal   1
+      }
+    }
+    Connection {
+      Type          Wire
+      SrcComponent  "S2"
+      SrcTerminal   2
+      Points        [935, 370]
+      Branch {
+        DstComponent  "S3"
+        DstTerminal   1
+      }
+      Branch {
+        Points        [935, 285; 1215, 285]
+        DstComponent  "S1"
+        DstTerminal   2
+      }
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Vm2"
+      SrcTerminal   3
+      Points        [1170, 425; 1170, 420; 1180, 420]
+      Branch {
+        DstComponent  "Scope3"
+        DstTerminal   1
+      }
+      Branch {
+        Points        [1180, 385]
+        DstComponent  "Mux1"
+        DstTerminal   2
+      }
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "From4"
+      SrcTerminal   1
+      Points        [235, 560]
+      Branch {
+        DstComponent  "Scope1"
+        DstTerminal   2
+      }
+      Branch {
+        Points        [235, 605; 1250, 605; 1250, 395]
+        DstComponent  "Mux1"
+        DstTerminal   3
+      }
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Am1"
+      SrcTerminal   3
+      Points        [935, 55]
+      DstComponent  "Scope2"
+      DstTerminal   1
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Vm1"
+      SrcTerminal   3
+      Points        [1030, 135; 1030, 65]
+      DstComponent  "Scope2"
+      DstTerminal   2
     }
   }
   Script {

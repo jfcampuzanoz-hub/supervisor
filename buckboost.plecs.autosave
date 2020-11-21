@@ -1962,9 +1962,9 @@ Plecs {
 "BAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAOAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAA"
 "AAAAA=="
       SavedViews    "AAAAAgAAAAA="
-      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAC"
-"QAAAH0AAAAIAAAAfQAAAAcAAAB9AAAABgAAAH0AAAAFAAAAfQAAAAQAAAB9AAAAAwAAAH0AAAACAA"
-"AAfQAAAAEAAAB9AAAAegAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAABJAAA"
+      HeaderState   "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAL/gMAAAAJAAAAB"
+"AAAAH0AAAAFAAAAfQAAAAgAAAB9AAAACQAAAH0AAAACAAAAfQAAAAMAAAB9AAAAAQAAAH0AAAAGAA"
+"AAfQAAAAcAAAB9AAAAegAAAAsBAAABAAAAAAAAAAAAAAAAff////8AAACBAAAAAAAAAAsAAABJAAA"
 "AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAA"
 "AAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAA"
 "AAxAAAAAQAAAAAAAAPoAAAAADE="
@@ -2033,7 +2033,7 @@ Plecs {
       Type          From
       Name          "From3"
       Show          off
-      Position      [230, 550]
+      Position      [205, 530]
       Direction     right
       Flipped       off
       Parameter {
@@ -2051,7 +2051,7 @@ Plecs {
       Type          From
       Name          "From4"
       Show          off
-      Position      [225, 560]
+      Position      [210, 565]
       Direction     right
       Flipped       off
       Parameter {
@@ -2305,7 +2305,7 @@ Plecs {
       Type          SignalMux
       Name          "Mux"
       Show          off
-      Position      [270, 280]
+      Position      [270, 265]
       Direction     right
       Flipped       off
       Parameter {
@@ -3031,7 +3031,7 @@ Plecs {
       Type          Scope
       Name          "Scope2"
       Show          on
-      Position      [1075, 80]
+      Position      [1080, 60]
       Direction     up
       Flipped       off
       Location      [0, 26; 1536, 807]
@@ -3188,7 +3188,7 @@ Plecs {
       Type          From
       Name          "From5"
       Show          off
-      Position      [140, 305]
+      Position      [155, 270]
       Direction     right
       Flipped       off
       Parameter {
@@ -3206,7 +3206,7 @@ Plecs {
       Type          From
       Name          "From6"
       Show          off
-      Position      [165, 275]
+      Position      [140, 260]
       Direction     right
       Flipped       off
       Parameter {
@@ -3260,7 +3260,7 @@ Plecs {
       Type          Goto
       Name          "Goto6"
       Show          off
-      Position      [600, 260]
+      Position      [600, 265]
       Direction     right
       Flipped       off
       Parameter {
@@ -4300,6 +4300,7 @@ Plecs {
       Type          Signal
       SrcComponent  "From3"
       SrcTerminal   1
+      Points        [240, 530; 240, 550]
       DstComponent  "Scope1"
       DstTerminal   1
     }
@@ -4343,7 +4344,6 @@ Plecs {
       Type          Signal
       SrcComponent  "Mux"
       SrcTerminal   1
-      Points        [320, 280; 320, 265]
       DstComponent  "C-Script"
       DstTerminal   1
     }
@@ -4389,7 +4389,6 @@ Plecs {
       Type          Signal
       SrcComponent  "From5"
       SrcTerminal   1
-      Points        [250, 305; 250, 285]
       DstComponent  "Mux"
       DstTerminal   3
     }
@@ -4412,7 +4411,6 @@ Plecs {
       Type          Signal
       SrcComponent  "Symmetrical PWM"
       SrcTerminal   1
-      Points        [560, 265; 560, 260]
       DstComponent  "Goto6"
       DstTerminal   1
     }
@@ -4573,22 +4571,6 @@ Plecs {
       }
     }
     Connection {
-      Type          Signal
-      SrcComponent  "Vm1"
-      SrcTerminal   3
-      Points        [1045, 135]
-      DstComponent  "Scope2"
-      DstTerminal   1
-    }
-    Connection {
-      Type          Signal
-      SrcComponent  "Am1"
-      SrcTerminal   3
-      Points        [935, 55; 1040, 55; 1040, 85]
-      DstComponent  "Scope2"
-      DstTerminal   2
-    }
-    Connection {
       Type          Wire
       SrcComponent  "S2"
       SrcTerminal   2
@@ -4622,7 +4604,7 @@ Plecs {
       Type          Signal
       SrcComponent  "From4"
       SrcTerminal   1
-      Points        [235, 560]
+      Points        [230, 565; 230, 560; 235, 560]
       Branch {
         DstComponent  "Scope1"
         DstTerminal   2
@@ -4632,6 +4614,22 @@ Plecs {
         DstComponent  "Mux1"
         DstTerminal   3
       }
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Am1"
+      SrcTerminal   3
+      Points        [935, 55]
+      DstComponent  "Scope2"
+      DstTerminal   1
+    }
+    Connection {
+      Type          Signal
+      SrcComponent  "Vm1"
+      SrcTerminal   3
+      Points        [1030, 135; 1030, 65]
+      DstComponent  "Scope2"
+      DstTerminal   2
     }
   }
   Script {

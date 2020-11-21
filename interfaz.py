@@ -156,7 +156,6 @@ class PanelParametros(QFrame):
         font.setPointSize(12)
         font.setBold(True)
 
-        
         PanelParametros.vboxLayout = QVBoxLayout()        
         self.setLayout(self.vboxLayout)
         
@@ -170,12 +169,11 @@ class PanelParametros(QFrame):
         self.labelValorSlider.setStyleSheet('color:white; background-color: #444952; border-radius: 10px')
         self.labelValorSlider.setAlignment(Qt.AlignCenter);
         self.vboxLayout.addWidget(self.labelValorSlider)
-
         
         PanelParametros.slider = QSlider(Qt.Horizontal, self)
         PanelParametros.slider.setFixedWidth(520)
         PanelParametros.slider.setFixedHeight(30)
-        PanelParametros.slider.setMinimum(0)
+        PanelParametros.slider.setMinimum(1)
         PanelParametros.slider.setMaximum(1000)
         PanelParametros.slider.valueChanged[int].connect(self.changeValue)
         PanelParametros.slider.setStyleSheet('QSlider::handle:horizontal {background-color: #8ab71b;}')
@@ -345,24 +343,25 @@ class PanelParametros(QFrame):
             self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
             
     def simular(self):
+
         irr = self.slider.value()
-        if self.swSinc3.isEnabled:
-            sinc = 1
+        if self.swSinc3.isEnabled():
+            sinc = 0
         else:
             sinc = 1
             
-        if self.swon3.isEnabled:
+        if self.swon3.isEnabled():
             on3 = 0
         else:
             on3 = 1
             
-        if self.swon2.isEnabled:
-            on2 = 1
+        if self.swon2.isEnabled():
+            on2 = 0
         else:
             on2 = 1
             
-        if self.swon1.isEnabled:
-            on1 = 1
+        if self.swon1.isEnabled():
+            on1 = 0
         else:
             on1 = 1
             
@@ -437,7 +436,10 @@ class PanelPlot(QFrame):
         self.lay.addWidget(self.panelGrafica)
         
         self.panelBotones.setLayout(self.lay3)
-        self.lay3.addWidget(self.combo)
+        
+
+        
+       
         
         self.panelBotones.setFixedHeight(100)
 
@@ -460,48 +462,43 @@ class PanelPlot(QFrame):
                                        'QComboBox::drop-down'
                                         '{'
                                             'width: 20px;'
-                                            'border-color: black;'
+                                            'border-color: #23252a;'
                                             'color: white'
+                                            'background-color: #23252a;'
                                         '}'
                                         )  
         
         self.combo.setFont(self.font)
-
+        
+        self.combo.setEditable(True)
+        self.ledit = self.combo.lineEdit()
+        self.ledit.setAlignment(Qt.AlignCenter)
+        self.ledit.setReadOnly(True)
+        
+        self.ledit.setStyleSheet('background-color:#23252a')  
+        self.lay3.addWidget(self.combo)
+        self.ledit.setFont(self.font)
 
         self.combo.setFixedSize(200,50)         
         
         
-
-
         self.lay.addWidget(self.panelBotones)
         self.panelGrafica.show()
         self.combo.currentIndexChanged.connect(self.on_currentIndexChanged)
         self.y2 = None
         self.y1 = None
+
+        self.sc = MplCanvas(self, 5, 4, 100) 
+        self.lay2.addWidget(self.sc)
         self.activar = False
     def on_currentIndexChanged( self ):
-        self.actualizar()
+        self.plot()
 
-        
-        
-    def plot(self):
-            
-        self.sc = MplCanvas(self, 5, 4, 100)                   
-        self.data = self.padre.getData()
-        self.tiempo = self.data[:,0]  
-        self.y1 = self.data[:,1]
-        self.y2 = self.data[:,2]
-        
-        if(self.combo.currentText() == "VOLTAJE CARGA"):
-            y = self.y1
-        elif(self.combo.currentText() == "SOC BATERÍA"):
-            y = self.y2
-        self.sc.axes.plot(self.tiempo, y, color = '#6a8922', linewidth = 1) 
-        self.lay2.addWidget(self.sc)
+    def setActivar(self):
         self.activar = True
 
         
-    def actualizar(self):
+    def plot(self):
         if self.activar == True:
             self.data = self.padre.getData()
             self.tiempo = self.data[:,0]  
@@ -550,7 +547,9 @@ class PanelSimulacion(QFrame):
         
         
     def plot(self):
+        self.panelPlot.setActivar()
         self.panelPlot.plot()
+        
         
     def simular(self, irr, sinc, on3, on2, on1):
         self.padre.simular(irr, sinc, on3, on2, on1)
