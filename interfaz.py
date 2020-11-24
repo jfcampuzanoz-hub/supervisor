@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QSlider
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QComboBox
-#from PyQt5.QtWidgets import QLed
+from pyqt_led import Led as QLed
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 import numpy as np
