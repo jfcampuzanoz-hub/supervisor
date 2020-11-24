@@ -21,15 +21,12 @@ class Supervisor:
         self.server.plecs.load(self.modelPath + '/' + self.modelName + '.plecs')
         self.server.plecs.scope( self.scopePath, 'ClearTraces')
         
-    def simular(self, numIrr, numSinc3, numOn3, numOn2, numOn1):
+    def simular(self, numIrr):
         
         opts = {'ModelVars' : {'irr' : numIrr}}
-        opts['ModelVars']['valorBotSinc3'] = numSinc3;
-        opts['ModelVars']['valorBotOn3'] = numOn3;
-        opts['ModelVars']['valorBotOn2'] = numOn2;
-        opts['ModelVars']['valorBotOn1'] = numOn1;
         self.server.plecs.simulate(self.modelName, opts)
-              
+        
+        
         with open(self.modelPath+"\Data.csv", 'r') as f:
             self.scopes = list(csv.reader(f, delimiter=","))
             

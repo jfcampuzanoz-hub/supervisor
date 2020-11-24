@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QSlider
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QComboBox
+#from PyQt5.QtWidgets import QLed
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 import numpy as np
@@ -124,7 +125,6 @@ class PanelParametros(QFrame):
     labelValorSlider = None
     vboxLayout = None
     labelVacio = None
-    panelSwitch = None
     
     swon1 = None
     swoff2 = None
@@ -173,7 +173,7 @@ class PanelParametros(QFrame):
         PanelParametros.slider = QSlider(Qt.Horizontal, self)
         PanelParametros.slider.setFixedWidth(520)
         PanelParametros.slider.setFixedHeight(30)
-        PanelParametros.slider.setMinimum(1)
+        PanelParametros.slider.setMinimum(0)
         PanelParametros.slider.setMaximum(1000)
         PanelParametros.slider.valueChanged[int].connect(self.changeValue)
         PanelParametros.slider.setStyleSheet('QSlider::handle:horizontal {background-color: #8ab71b;}')
@@ -189,84 +189,6 @@ class PanelParametros(QFrame):
         self.vboxLayout.addWidget(lbl)
 
         
-        self.panelSwitch = QFrame()
-        self.panelSwitch.setFixedHeight(500)
-        self.lay1 = QGridLayout()
-        self.panelSwitch.setLayout(self.lay1)
-        
-        self.labelSwitch1 = QLabel('SWITCH 1')
-        self.labelSwitch1.setFont(font)
-        self.labelSwitch1.setStyleSheet('color: white')
-        self.labelSwitch1.setAlignment(Qt.AlignCenter);
-        self.labelSwitch1.setFixedWidth(200)
-        self.lay1.addWidget(self.labelSwitch1,1,1)
-        
-        self.swon1 = QPushButton('ON', self)
-        self.swon1.setFont(font)
-        self.swon1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-        self.swon1.setFixedSize(100,40)
-        self.swon1.setEnabled(False)
-        self.swon1.clicked.connect(self.toggle1)
-        self.lay1.addWidget(self.swon1,1,2)
-        
-        self.swoff1 = QPushButton('OFF', self)
-        self.swoff1.setFont(font)
-        self.swoff1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-        self.swoff1.setFixedSize(100,40)
-        self.swoff1.clicked.connect(self.toggle1)
-        self.lay1.addWidget(self.swoff1,1,3)
-        
-        self.labelSwitch2 = QLabel('SWITCH 2')
-        self.labelSwitch2.setFont(font)
-        self.labelSwitch2.setStyleSheet('color: white')
-        self.labelSwitch2.setAlignment(Qt.AlignCenter);
-        self.labelSwitch2.setFixedWidth(200)
-        self.lay1.addWidget(self.labelSwitch2,2,1)
-        
-        self.swon2 = QPushButton('ON', self)
-        self.swon2.setFont(font)
-        self.swon2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-        self.swon2.setFixedSize(100,40)
-        self.swon2.setEnabled(False)
-        self.swon2.clicked.connect(self.toggle2)
-        self.lay1.addWidget(self.swon2,2,2)
-        
-        self.swoff2 = QPushButton('OFF', self)
-        self.swoff2.setFont(font)
-        self.swoff2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-        self.swoff2.setFixedSize(100,40)
-        self.swoff2.clicked.connect(self.toggle2)
-        self.lay1.addWidget(self.swoff2,2,3)
-        
-        self.labelSwitch3 = QLabel('SWITCH 3')
-        self.labelSwitch3.setFont(font)
-        self.labelSwitch3.setStyleSheet('color: white')
-        self.labelSwitch3.setAlignment(Qt.AlignCenter);
-        self.labelSwitch3.setFixedWidth(200)
-        self.lay1.addWidget(self.labelSwitch3,3,1)
-        
-        self.swon3 = QPushButton('ON', self)
-        self.swon3.setFont(font)
-        self.swon3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-        self.swon3.setFixedSize(100,40)
-        self.swon3.setEnabled(False)
-        self.swon3.clicked.connect(lambda: self.toggle3("ON"))
-        self.lay1.addWidget(self.swon3,3,2)
-        
-        self.swSinc3 = QPushButton('CARGAR', self)
-        self.swSinc3.setFont(font)
-        self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-        self.swSinc3.setFixedSize(100,40)
-        self.swSinc3.clicked.connect(lambda: self.toggle3("SINC"))
-        self.lay1.addWidget(self.swSinc3,3,3)
-        
-        self.swoff3 = QPushButton('OFF', self)
-        self.swoff3.setFont(font)
-        self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-        self.swoff3.setFixedSize(100,40)
-        self.swoff3.clicked.connect(lambda: self.toggle3("OFF"))
-        self.lay1.addWidget(self.swoff3,3,4)
-        
 
         self.botonSimular = QPushButton('SIMULAR', self)
         self.botonSimular.setFont(font)
@@ -275,12 +197,7 @@ class PanelParametros(QFrame):
         self.botonSimular.setFixedHeight(50)
         self.botonSimular.clicked.connect(self.simular)
         
-        
-        
-        
-        self.panelSwitch.setFixedHeight(300)
-        self.vboxLayout.addWidget(self.panelSwitch)
-        
+
         self.labelVacio.setFixedHeight(100)
         
         self.vboxLayout.addWidget(self.labelVacio)
@@ -291,82 +208,13 @@ class PanelParametros(QFrame):
         valor = str(value)
         self.labelValorSlider.setText(valor)
         
-    def toggle1(self):
-        if(self.actual1 == "ON"):
-            self.actual1 = "OFF"
-            self.swon1.setEnabled(True)
-            self.swon1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            self.swoff1.setEnabled(False)
-            self.swoff1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-        else:
-            self.actual1 = "ON"
-            self.swon1.setEnabled(False)
-            self.swon1.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            self.swoff1.setEnabled(True)
-            self.swoff1.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            
-    def toggle2(self):
-        if(self.actual2 == "ON"):
-            self.actual2 = "OFF"
-            self.swon2.setEnabled(True)
-            self.swon2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            self.swoff2.setEnabled(False)
-            self.swoff2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-        else:
-            self.actual2 = "ON"
-            self.swon2.setEnabled(False)
-            self.swon2.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            self.swoff2.setEnabled(True)
-            self.swoff2.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            
-    def toggle3(self,txt):
-        if(txt == "ON"):
-            self.swon3.setEnabled(False)
-            self.swon3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            self.swoff3.setEnabled(True)
-            self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            self.swSinc3.setEnabled(True)
-            self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-        elif (txt == "OFF"):
-            self.swoff3.setEnabled(False)
-            self.swoff3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            self.swon3.setEnabled(True)
-            self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            self.swSinc3.setEnabled(True)
-            self.swSinc3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-        else:
-            self.swSinc3.setEnabled(False)
-            self.swSinc3.setStyleSheet('background-color: #23252a; color: white; border-radius: 10px')
-            self.swoff3.setEnabled(True)
-            self.swoff3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            self.swon3.setEnabled(True)
-            self.swon3.setStyleSheet('background-color: #444952; color: white; border-radius: 10px')
-            
-    def simular(self):
+      
+    def simular(self, irr):
 
         irr = self.slider.value()
-        if self.swSinc3.isEnabled():
-            sinc = 0
-        else:
-            sinc = 1
-            
-        if self.swon3.isEnabled():
-            on3 = 0
-        else:
-            on3 = 1
-            
-        if self.swon2.isEnabled():
-            on2 = 0
-        else:
-            on2 = 1
-            
-        if self.swon1.isEnabled():
-            on1 = 0
-        else:
-            on1 = 1
             
        
-        self.padre.simular(irr, sinc, on3, on2, on1)
+        self.padre.simular(irr)
         self.padre.plot()
    
 
@@ -400,8 +248,8 @@ class PanelCuerpo(QFrame):
     def plot(self):       
         self.panelSimulacion.plot()
     
-    def simular(self,irr, sinc, on3, on2, on1):
-        self.padre.simular(irr, sinc, on3, on2, on1)  
+    def simular(self, irr):
+        self.padre.simular(irr)  
 
     def getData(self):
         return self.padre.getData()        
@@ -551,8 +399,8 @@ class PanelSimulacion(QFrame):
         self.panelPlot.plot()
         
         
-    def simular(self, irr, sinc, on3, on2, on1):
-        self.padre.simular(irr, sinc, on3, on2, on1)
+    def simular(self, irr):
+        self.padre.simular(irr)
         
     def getData(self):
         return self.padre.getData()
@@ -600,8 +448,8 @@ class Interfaz(QWidget):
         self.scopes = self.supervisor.getData()
         return self.scopes
     
-    def simular(self, irr, sinc, on3, on2, on1):
-        self.supervisor.simular(irr, sinc, on3, on2, on1)
+    def simular(self, irr):
+        self.supervisor.simular(irr)
         
    
     
