@@ -12,7 +12,7 @@ class Supervisor:
     scopes = None
     
     def __init__(self):
-        self.modelPath = r"C:\Users\juan_\Desktop\Supervisor"
+        self.modelPath = r"C:\Users\57322\Desktop\Supervisor"
         self.port = "1080"
         self.server = xmlrpc.client.Server('http://localhost:' + self.port + '/RPC2')
         self.modelName = 'buckboost'
@@ -23,8 +23,11 @@ class Supervisor:
         
     def simular(self, numIrr):
         
-        opts = {'ModelVars' : {'irr' : numIrr}}
+        opts = {'ModelVars' : {'irr' : numIrr/1000}}
         self.server.plecs.simulate(self.modelName, opts)
+        print(self.server.plecs.get(self.modelName + '/Scope'))
+        
+
         
         
         with open(self.modelPath+"\Data.csv", 'r') as f:

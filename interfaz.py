@@ -6,12 +6,10 @@ from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QSlider
-from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QComboBox
-from pyqt_led import Led as QLed
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-import numpy as np
+from PyQt5.QtGui import QPainter, QBrush, QPen
 import mundo
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -124,25 +122,10 @@ class PanelParametros(QFrame):
     labelSlider = None
     labelValorSlider = None
     vboxLayout = None
-    labelVacio = None
     
-    swon1 = None
-    swoff2 = None
-    labelSwitch1 = None
     
-    swon2 = None
-    swoff2 = None
-    labelSwitch2 = None
-    
-    swon3 = None
-    swoff3 = None
-    swSinc3 = None
-    labelSwitch3 = None
 
     lay1 = None
-    actual1 = "ON"
-    actual2 = "ON"
-    actual3 = "ON"
     
     botonSimular = None
     
@@ -187,8 +170,64 @@ class PanelParametros(QFrame):
         lbl = QLabel()
         lbl.setFixedHeight(100)
         self.vboxLayout.addWidget(lbl)
+        
+        self.labelSw1 = QLabel('Switch 1')
+        self.labelSw1.setFixedWidth(90)
+        self.labelSw1.setFont(font)
+        self.labelSw1.setStyleSheet('color:white')
 
         
+        self.labelBt1 = QLabel()
+        self.labelBt1.setFixedSize(80,80)
+        self.labelBt1.setStyleSheet('border-color: black; background-color: red; border-radius: 40px; border: 10px solid black')
+        
+        
+        
+        self.labelSw2 = QLabel('Switch 2')
+        self.labelSw2.setFixedWidth(90)
+        self.labelSw2.setFont(font)
+        self.labelSw2.setStyleSheet('color:white')
+        
+        self.labelBt2 = QLabel()
+        self.labelBt2.setFixedSize(80,80)
+        self.labelBt2.setStyleSheet('background-color: red; border-radius: 40px; border: 10px solid black')
+        
+        
+        
+        self.labelSw3 = QLabel('Switch 3')
+        self.labelSw3.setFixedWidth(90)
+        self.labelSw3.setFont(font)
+        self.labelSw3.setStyleSheet('color:white')
+        
+        self.labelBt3 = QLabel()
+        self.labelBt3.setFixedSize(80,80)
+        self.labelBt3.setStyleSheet('background-color: red; border-radius: 40px; border: 10px solid black')
+
+
+
+
+        lay1 = QHBoxLayout()
+        lay1.addWidget(self.labelSw1)
+        lay1.addWidget(self.labelBt1)
+        panelay1 = QFrame()
+        panelay1.setLayout(lay1)
+        
+        
+        lay2 = QHBoxLayout()
+        lay2.addWidget(self.labelSw2)
+        lay2.addWidget(self.labelBt2)
+        panelay2 = QFrame()
+        panelay2.setLayout(lay2)
+        
+        lay3 = QHBoxLayout()
+        lay3.addWidget(self.labelSw3)
+        lay3.addWidget(self.labelBt3)
+        panelay3 = QFrame()
+        panelay3.setLayout(lay3)
+        
+        self.vboxLayout.addWidget(panelay1)
+        self.vboxLayout.addWidget(panelay2)
+        self.vboxLayout.addWidget(panelay3)
 
         self.botonSimular = QPushButton('SIMULAR', self)
         self.botonSimular.setFont(font)
@@ -199,8 +238,6 @@ class PanelParametros(QFrame):
         
 
         self.labelVacio.setFixedHeight(100)
-        
-        self.vboxLayout.addWidget(self.labelVacio)
         self.vboxLayout.addWidget(self.botonSimular)
 
         
